@@ -1,4 +1,6 @@
-export const series = [
+import Serie from './Types.ts/TypesSeries.js';
+
+export const series: Serie[] = [
   {
     id: 1,
     name: 'The Sopranos',
