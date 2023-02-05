@@ -9,24 +9,23 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _App_headerComponent, _App_seriesList;
-import CardList from '../CardList/CardList.js';
+var _CardList_series;
+import Card from '../Card/Card.js';
 import Component from '../Component.js';
-import Header from '../Header/Header.js';
-import { series } from '../series.js';
-export default class App extends Component {
-    constructor(parentElement) {
-        super(parentElement, 'div');
-        _App_headerComponent.set(this, void 0);
-        _App_seriesList.set(this, void 0);
-        const parent = document.querySelector('.container');
-        __classPrivateFieldSet(this, _App_headerComponent, new Header('My Series', parent, 'main-header'), "f");
-        __classPrivateFieldSet(this, _App_seriesList, new CardList(this.element, series.map(serie => (Object.assign(Object.assign({}, serie), { score: 5 })))), "f");
+export default class CardList extends Component {
+    constructor(parentElement, seriesList, type = 'ul') {
+        super(parentElement, type, 'series-list');
+        _CardList_series.set(this, void 0);
+        __classPrivateFieldSet(this, _CardList_series, seriesList, "f");
     }
     render() {
         super.render();
-        __classPrivateFieldGet(this, _App_headerComponent, "f").render();
-        __classPrivateFieldGet(this, _App_seriesList, "f").render();
+        __classPrivateFieldGet(this, _CardList_series, "f").forEach(serie => {
+            const liElement = document.createElement('li'); // <li>
+            const serieCard = new Card(liElement, serie); // <li> <article>....</article></li>
+            serieCard.render(); // Meto el article dentro de su parent, es decir, el liElement
+            this.element.appendChild(liElement); // <ul><li>....</li></ul>
+        });
     }
 }
-_App_headerComponent = new WeakMap(), _App_seriesList = new WeakMap();
+_CardList_series = new WeakMap();
